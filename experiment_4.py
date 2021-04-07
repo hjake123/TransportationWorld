@@ -56,10 +56,10 @@ while step < HM_STEPS:
     img = Image.fromarray(env, "RGB")
     cv2.imshow("", np.array(img))
     if (reward == PICK_UP_REWARD or reward == DROP_OFF_REWARD):
-      if cv2.waitKey(50) & 0xFF == ord("q"):
+      if cv2.waitKey(1) & 0xFF == ord("q"):
         break
     else:
-      if cv2.waitKey(50) & 0xFF == ord("q"):
+      if cv2.waitKey(1) & 0xFF == ord("q"):
         break
     
     # all drop off locations are filled
