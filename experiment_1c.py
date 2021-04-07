@@ -10,6 +10,8 @@ from constants import SIZE, MOVE_PENALTY, PICK_UP_REWARD, DROP_OFF_REWARD
 from environment import Agent, PickUpCell, DropOffCell
 from helper_functions import initialize_q_table, pRandom, pExploit, get_state, perform_action, calculate_new_q, create_display_environment
 
+WAIT_TIME = 1
+
 style.use("ggplot")
 
 seed = int(input("Seed: "))
@@ -45,10 +47,10 @@ def experiment_1c(LEARNING_RATE, DISCOUNT, HM_STEPS):
       img = Image.fromarray(env, "RGB")
       cv2.imshow("", np.array(img))
       if (reward == PICK_UP_REWARD or reward == DROP_OFF_REWARD):
-        if cv2.waitKey(50) & 0xFF == ord("q"):
+        if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
           break
       else:
-        if cv2.waitKey(50) & 0xFF == ord("q"):
+        if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
           break
       
       # all drop off locations are filled
