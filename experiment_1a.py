@@ -15,7 +15,7 @@ style.use("ggplot")
 LEARNING_RATE = 0.3
 DISCOUNT = 0.5
 HM_STEPS = 6000
-WAIT_TIME = 10
+WAIT_TIME = 1
 
 seed = int(input("Seed: "))
 random.seed(seed)

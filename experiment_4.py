@@ -15,6 +15,7 @@ style.use("ggplot")
 LEARNING_RATE = 0.3
 DISCOUNT = 0.5
 HM_STEPS = 6000
+WAIT_TIME = 1
 
 seed = int(input("Seed: "))
 random.seed(seed)
@@ -56,10 +57,10 @@ while step < HM_STEPS:
     img = Image.fromarray(env, "RGB")
     cv2.imshow("", np.array(img))
     if (reward == PICK_UP_REWARD or reward == DROP_OFF_REWARD):
-      if cv2.waitKey(1) & 0xFF == ord("q"):
+      if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
         break
     else:
-      if cv2.waitKey(1) & 0xFF == ord("q"):
+      if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
         break
     
     # all drop off locations are filled
