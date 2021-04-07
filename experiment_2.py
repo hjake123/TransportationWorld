@@ -37,10 +37,7 @@ def experiment_2(LEARNING_RATE, DISCOUNT, HM_STEPS):
 
       step += 1
       reward, new_state = perform_action(agent, action, drop_cells, pick_cells)
-      if step < 500:
-        next_action = pRandom()
-      else:
-        next_action = pExploit(current_state, q_table)
+      next_action = pExploit(current_state, q_table)
       q_table[current_state][action] = sarsa_calculate_new_q(LEARNING_RATE, DISCOUNT, reward, action, next_action, current_state, new_state, q_table)
       session_reward += reward
 
