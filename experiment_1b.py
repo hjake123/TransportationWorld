@@ -23,6 +23,7 @@ random.seed(seed)
 q_table = initialize_q_table()
 step = 0
 all_rewards = []
+run_num = 0
 while step < HM_STEPS:
   # initial environment state
   drop_cells = [DropOffCell(0,0), DropOffCell(0,4), DropOffCell(2,2), DropOffCell(4,4)]
@@ -56,8 +57,10 @@ while step < HM_STEPS:
         break
     
     # all drop off locations are filled
-    if len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS:
+    if (len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS) and run_num == 1:
       break
+    elif (len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS) and run_num != 1:
+      run_num = 1
   all_rewards.append(session_reward)
 
 plt.plot([i for i in range(len(all_rewards))], all_rewards)

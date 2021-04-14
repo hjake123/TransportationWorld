@@ -16,7 +16,7 @@ style.use("ggplot")
 
 seed = int(input("Seed: "))
 random.seed(seed)
-
+run_num = 0
 def experiment_1c(LEARNING_RATE, DISCOUNT, HM_STEPS):
   q_table = initialize_q_table()
   step = 0
@@ -54,8 +54,10 @@ def experiment_1c(LEARNING_RATE, DISCOUNT, HM_STEPS):
           break
       
       # all drop off locations are filled
-      if len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS:
+      if (len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS) and run_num == 1:
         break
+      elif (len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS) and run_num != 1:
+        run_num = 1
     all_rewards.append(session_reward)
 
   plt.plot([i for i in range(len(all_rewards))], all_rewards)
