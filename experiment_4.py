@@ -16,6 +16,7 @@ LEARNING_RATE = 0.3
 DISCOUNT = 0.5
 HM_STEPS = 6000
 WAIT_TIME = 1
+DO_VIS = False
 
 seed = int(input("Seed: "))
 random.seed(seed)
@@ -53,15 +54,16 @@ while step < HM_STEPS:
     session_reward += reward
 
     # visualization
-    env = create_display_environment(drop_cells, pick_cells, agent)
-    img = Image.fromarray(env, "RGB")
-    cv2.imshow("", np.array(img))
-    if (reward == PICK_UP_REWARD or reward == DROP_OFF_REWARD):
-      if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
-        break
-    else:
-      if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
-        break
+    if DO_VIS:
+      env = create_display_environment(drop_cells, pick_cells, agent)
+      img = Image.fromarray(env, "RGB")
+      cv2.imshow("", np.array(img))
+      if (reward == PICK_UP_REWARD or reward == DROP_OFF_REWARD):
+        if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
+          break
+      else:
+        if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
+          break
     
     # all drop off locations are filled
     if len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS:
