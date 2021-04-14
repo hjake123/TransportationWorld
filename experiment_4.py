@@ -16,7 +16,6 @@ LEARNING_RATE = 0.3
 DISCOUNT = 0.5
 HM_STEPS = 6000
 WAIT_TIME = 1
-DO_VIS = True
 
 seed = int(input("Seed: "))
 random.seed(seed)
@@ -25,18 +24,14 @@ q_table = initialize_q_table()
 step = 0
 all_rewards = []
 terminated = 0
-run_num = 0
 while step < HM_STEPS:
   # initial environment state
   if terminated < 3:
     drop_cells = [DropOffCell(0,0), DropOffCell(0,4), DropOffCell(2,2), DropOffCell(4,4)]
     pick_cells = [PickUpCell(2,4), PickUpCell(3,1)]
     agent = Agent(4, 0)
-  elif terminated == 6 and run_num == 1:
-      break
-  elif terminated == 6 and run_num != 1:
-      run_num = 1
-      terminated = 0
+  elif terminated == 6:
+    break
   else:
     drop_cells = [DropOffCell(0,0), DropOffCell(0,4), DropOffCell(2,2), DropOffCell(4,4)]
     pick_cells = [PickUpCell(2,0), PickUpCell(0,2)]
@@ -58,16 +53,15 @@ while step < HM_STEPS:
     session_reward += reward
 
     # visualization
-    if DO_VIS:
-      env = create_display_environment(drop_cells, pick_cells, agent)
-      img = Image.fromarray(env, "RGB")
-      cv2.imshow("", np.array(img))
-      if (reward == PICK_UP_REWARD or reward == DROP_OFF_REWARD):
-        if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
-          break
-      else:
-        if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
-          break
+    env = create_display_environment(drop_cells, pick_cells, agent)
+    img = Image.fromarray(env, "RGB")
+    cv2.imshow("", np.array(img))
+    if (reward == PICK_UP_REWARD or reward == DROP_OFF_REWARD):
+      if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
+        break
+    else:
+      if cv2.waitKey(WAIT_TIME) & 0xFF == ord("q"):
+        break
     
     # all drop off locations are filled
     if len(list(filter(lambda cell: cell.has_space() == False, drop_cells))) == len(drop_cells) or step == HM_STEPS:
