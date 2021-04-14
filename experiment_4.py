@@ -38,6 +38,9 @@ while step < HM_STEPS:
     pick_cells = [PickUpCell(2,0), PickUpCell(0,2)]
     agent = Agent(4, 0)
 
+  with open(f"qtable-e4-{terminated}.pickle", "wb") as f:
+    pickle.dump(q_table, f)
+
   # while ai has not reached a terminal state
   session_reward = 0
   while True:
